@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>JS-Practice</title>
+
+    <style>
+      header {
+        display: flex;
+        flex-direction: row;
+      }
+      footer {
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+      }
+      .red {
+        height: 100px;
+        width: 100px;
+        background-color: red;
+        margin: 0.5px;
+      }
+      .drawArea {
+        padding: 0;
+        margin: 0px auto;
+        margin-top: 30px;
+        height: 500px;
+        width: calc(100vw - 66px);
+        border: 3px solid black;
+      }
+      .dot {
+        height: 8px; width: 8px;
+        border-radius: 4px; /* rounds corners */
+        background: blue;
+        position: absolute;
+      }
+      .rainbow {
+        padding: 0;
+        margin: 0px auto;
+        margin-top: 30px;
+        height: 500px;
+        width: calc(100vw - 66px);
+        border: 3px solid orange;
+      }
+    </style>
+  </head>
+  <body>
+
+    <script>
+      document.body.style.height = '2000px';
+
+      /* Below I created a header element, and put a set amount of divs in them */
+
+      let headerEl = document.createElement("header");
+      document.body.appendChild(headerEl);
+
+      let divArray = [];
+      const headerSelec = document.querySelector("header");
+      const createDivs = function(amount, location) {
+        for(let i = 0; i < amount; i++) {
+          let node = document.createElement("div");
+          node.className = "red";
+          location.appendChild(node);
+          divArray.push(node);
+        }
+      };
+      createDivs(50, headerSelec);
+
+      /* End of header */
+
+      /* Create a drawing area */
+
+      let drawArea = document.createElement("div");
+      drawArea.className = "drawArea"
+      document.body.appendChild(drawArea);
+
+      const addDots = function(drawSpace) { /* The drawSpace should be an element with size */
+        drawArea.addEventListener("mouseover", event => {
+          let dot = document.createElement("div");
+          dot.className = "dot";
+          dot.style.left = (event.pageX - 4) + "px";
+          dot.style.top = (event.pageY - 4) + "px";
+          drawSpace.appendChild(dot);
+        });
+      };
+
+      addDots(drawArea);
+
+      /* End of drawing area */
+
+      /* Create a drag bar */
+
+      /* If a button is pressed, make a div go rainbow */
+
+      let rainbowDiv = document.createElement("div");
+      rainbowDiv.className = "rainbow";
+      document.body.appendChild(rainbowDiv);
+
+      let rainbowButton = document.createElement("button");
+      rainbowButton.style.height = "30px";
+      rainbowButton.style.width = "100%";
+      rainbowButton.textContent = "Press me for rainbow!";
+      rainbowDiv.appendChild(rainbowButton);
+
+      const createRainbowEffect = function(rainbowSpace, button) { /* The rainbowSpace should be an element with size */
+        let ticks = 0;
+        button.addEventListener("click", event => {
+          setInterval(() => {
+            ticks++;
+            if(ticks === 10) { rainbowSpace.style.background = "red"; }
+            if(ticks === 20) { rainbowSpace.style.background = "orange"; }
+            if(ticks === 30) { rainbowSpace.style.background = "yellow"; }
+            if(ticks === 40) { rainbowSpace.style.background = "green"; }
+            if(ticks === 50) { rainbowSpace.style.background = "blue"; }
+            if(ticks === 60) { rainbowSpace.style.background = "purple"; }
+          }, 60);
+          ticks = 0;
+        });
+      }
+      createRainbowEffect(rainbowDiv, rainbowButton);
+
+      /* End of rainbow */
+
+      /* Create footer div pattern thingy */
+
+      let footerEl = document.createElement("footer");
+      createDivs(50, footerEl);
+      document.body.appendChild(footerEl);
+
+      /* End of footer div pattern */
+
+
+
+      /* End of drag bar */
+
+    </script>
+  </body>
+</html>
